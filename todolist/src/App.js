@@ -13,6 +13,7 @@ import Form3 from "./components/case8/form3";
 import Form4 from "./components/case8/form4";
 import Calculator from "./components/case9/calculator";
 import WelcomeDialog from "./components/case10/wlecomeDialog";
+import FilterBox from "./components/case11/filterBox";
 function App() {
   return (
     <div className="App">
@@ -29,7 +30,8 @@ function App() {
       {/* <Form3/> */}
       {/* <Form4/> */}
       {/* <Calculator/> */}
-      <WelcomeDialog/>
+      {/* <WelcomeDialog/> */}
+      <FilterBox/>
     </div>
   );
 }

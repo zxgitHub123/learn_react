@@ -1,0 +1,23 @@
+.g_menu{
+    height: 100%;
+    background: #fff;
+    padding-top:30px;
+    overflow: hidden;
+    border-right: 1px solid #ebebeb;
+}
+.g_menu .g_menu_item{
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    cursor: pointer;
+    
+}
+.g_menu .g_menu_item .link{
+    padding-left: 10px;
+    display:block;
+    height: 100%;
+
+}
+.g_menu .g_menu_item:hover a{
+    color:#282828;
+}
