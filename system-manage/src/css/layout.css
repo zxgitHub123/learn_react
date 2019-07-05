@@ -1,0 +1,19 @@
+.g_layout{
+    height: 100%;
+    display: flex;
+}
+.g_clearfix:after{
+    content:"";
+    display: block;
+    height: 0;
+    overflow: hidden;
+    clear: both;
+}
+.g_left{
+    height: 100%;
+    width:200px;
+}
+.g_right{
+    height: 100%;
+    flex:1;
+}

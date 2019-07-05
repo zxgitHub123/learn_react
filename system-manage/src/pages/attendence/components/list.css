@@ -1,0 +1,106 @@
+.content{
+    margin:20px 20px 0;
+    border-radius: 4px;
+    border:1px solid #b7c8d0;
+    overflow: auto;
+}
+.listHeader{
+    height: 50px;
+    background: #f2f5f9;
+    line-height: 50px;
+    border-radius: 4px 4px 0 0;
+    padding:0 0 0 20px;
+    border-bottom: 1px solid #e9eef1;
+}
+.listHeader .switch{
+    height: 100%;
+}
+.listHeader .icon{
+    vertical-align: top;
+    width:50px;
+    text-align: center;
+    height: 100%;
+    line-height: 50px;
+    cursor: pointer;
+    border-left: 1px solid  #b7c8d0;
+    color:#8899a9;
+}
+.listHeader .icon.active{
+    background:#fff;
+    color:#25c870;
+}
+.list .cartItem{
+    float:left;
+    width:280px;
+    margin:10px 0 0 10px;
+    padding:10px;
+    border-radius: 4px;
+    font-size: 14px;
+    border:1px solid #dee6ea;
+    box-shadow: 1px 1px 5px #dee6ea;
+    cursor: pointer;
+}
+.list .cartItem p{
+    margin-bottom: 0;
+}
+.list .cartItem .name:hover{
+    color:#24c875;
+}
+.list .cartItem .tel{
+    margin-left: 10px;
+}
+.list .cartItem .leader{
+    padding:1px;
+    color:#fff;
+    font-size: 12px;
+    background: #25c870;
+}
+.list .cartItem .heart.like{
+    color:#25c870;
+}
+.list .cartItem .heart,.list .cartItem .del{
+    position: absolute;
+    right:0;
+    top:0;
+    bottom: 0;
+    height: 16px;
+    margin:auto;
+}
+.list .cartItem .del{
+    right:30px;
+    font-size: 16px;
+    color:#8999a9;
+}
+/* 列表样式 */
+.listRow{
+    height: 48px;
+    padding-left: 20px;
+    line-height: 48px;
+    border-bottom: 1px solid #b7c8d0;
+}
+.listRow:hover{
+    background:rgba(36,238,145,0.1);
+}
+.listRow .col{
+    height: 100%;
+}
+.listRow .col-l{
+    color:#24c875;
+    cursor: pointer;
+}
+.listRow .col .leader{
+    background:#24c875;
+    color:#fff;
+    font-size: 12px;
+    margin-left: 5px;
+    padding:1px 2px;
+}
+.g-empty{
+    text-align: center;
+    padding-top:20px;
+}
+.g-empty .word{
+    font-size: 14px;
+    margin-top:20px;
+    color:#b8e0c8;
+}
