@@ -42,7 +42,8 @@ const initExter=[
 ]
 function staff(staff=initStaff,action){
     switch(action.type){
-        case 'changeCommon':
+        case 'changeLike':
+            console.log(111);
             return staff.map(item=>{
                 if(item.member_id===action.member_id){
                     item.like=action.flag
@@ -69,8 +70,21 @@ function common(common=initCommon,action){
 function external(external=initExter,action){
     return external;
 }
+function curMember(curMember,action){
+    switch(action.type){
+        case 'changeCur':
+            return {...curMember,...action.param};
+        default:
+            return{
+                member_id:1,
+                member_name:'哈哈',
+                phone:'123456'
+            }
+    }
+}
 export default combineReducers({
     staff,
     common,
-    external
+    external,
+    curMember
 })

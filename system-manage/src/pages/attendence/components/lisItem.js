@@ -4,12 +4,12 @@ import {Icon,Tooltip,Row,Col} from "antd";
 class Heart extends React.Component{
     setLike=()=>{
         const flag=this.props.like ? 0:1;
-        if(this.props.type!=='getCommon') this.props.setCommon(flag,this.props.id);
-        if(flag===0){
-            this.props.delCommon(this.props.member);
-        }else {
-            this.props.addCommon(this.props.member);
-        }
+        if(this.props.type!=='getCommon') this.props.setLike(flag,this.props.id);
+        // if(flag===0){
+        //     this.props.delCommon(this.props.member);
+        // }else {
+        //     this.props.addCommon(this.props.member);
+        // }
     }
     render(){
         return  <Tooltip title={this.props.like===1?'取消关注':'关注'} placement="bottom">
@@ -27,6 +27,10 @@ class Del extends React.Component{
     }
 }
 class ListItem extends React.Component{
+    gotoDetail=()=>{
+        this.props.gotoDetail();
+        this.props.changeCur(this.props.member);
+    }
     render(){
         let content;
         if(this.props.type==="cart"){
@@ -42,7 +46,7 @@ class ListItem extends React.Component{
                         {this.props.leader && <span className="leader">部分负责人</span>}
                     </p>
                 </div>
-                <Heart type={this.props.type} like={this.props.like} memeber={this.props.member}/>
+                <Heart type={this.props.type} like={this.props.like} memeber={this.props.member} setLike={this.props.setLike}/>
                 {this.props.delIcon ? <Del id={this.props.member_id}/>:null}
             </div>
         }else{
@@ -58,7 +62,7 @@ class ListItem extends React.Component{
                         {this.props.phone}
                     </Col>
                     <Col span={4} className="col">
-                        <Heart type={this.props.type} like={this.props.like} member={this.props.member}/>
+                        <Heart type={this.props.type} like={this.props.like} member={this.props.member} setLike={this.props.setLike}/>
                         {this.props.delIcon?<Del id={this.props.member_id}/>:null}
                     </Col>
                 </Row>

@@ -8,7 +8,7 @@ class List extends React.Component{
     render(){
         if(this.props.data.length>0){
             const items=this.props.data.map((item)=>{
-                return <ListItem key={item.member_id} type={this.props.type} {...item} member={item} gotoDetail={this.props.gotoDetail}/>
+                return <ListItem key={item.member_id} type={this.props.type} {...item} member={item} gotoDetail={this.props.gotoDetail} changeCur={this.props.changeCur} setLike={this.props.setLike}/>
             })
             return <div className="content" style={{height:height}}>
                 {this.props.header && this.props.header()}
@@ -39,5 +39,21 @@ export default connect((state,ownProps)=>{
     console.log(getData(state,ownProps));
     return {
         data:getData(state,ownProps)
+    }
+},(dispatch,ownProps)=>{
+    return {
+        changeCur(member){
+            dispatch({
+                type:'changeCur',
+                param:member
+            })
+        },
+        setLike(flag,member_id){
+            dispatch({
+                type:'changeLike',
+                flag,
+                member_id
+            })
+        }
     }
 })(List);

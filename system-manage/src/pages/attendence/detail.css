@@ -1,0 +1,42 @@
+.detail{
+	font-size:14px;
+}
+.detail .img{
+	width:120px;
+	height: 120px;
+	float: left;
+	font-size: 28px;
+}
+.detail .add{
+	padding:30px;
+	padding-left: 100px;
+}
+.detail .base{
+	padding:30px;
+	padding-left: 100px;
+	border-bottom: 1px solid #f2f5f9;
+}
+.detail .word{
+	float:left;
+	margin-top:10px;
+	margin-left: 20px;
+}
+.detail .word .name{
+	display:block;
+	font-size: 16px;
+	margin-bottom: 20px;
+}
+.detail .word p{
+	margin-bottom: 10px;
+}
+.detail .title{
+	font-size: 14px;
+	color:#8999a9;
+	margin-right: 10px;
+}
+.detail .add p{
+	margin-bottom: 10px;
+}
+.detail .add .title{
+	margin-right: 40px;
+}

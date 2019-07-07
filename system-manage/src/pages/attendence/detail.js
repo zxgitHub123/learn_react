@@ -26,7 +26,7 @@ class Detail extends React.Component{
             ],
             'staff':[
                 {
-                    link:'/staff/list',
+                    link:'/attendence/staff/list',
                     label:'公司职员'
                 },{
                     label:'公司职员详情'
@@ -48,33 +48,31 @@ class Detail extends React.Component{
                         <Button type="primary" loading={this.state.btn_loading} onClick={this.edit}>编辑dz</Button>
                     </div> 
                 )}
-                <div className="content">
-                    <div className="base clearFix">
-                        <HeartImg {...data} className="img"/>
-                        <div class="word">
-                            <span className="name">
-                                {data.member_name}
-                            </span>
-                            <p>
-                                <span className="title">部门: </span>
-                                {data.depart_name}
-                            </p>
-                            <p>
-                                <span className="title">职位</span>
-                                {data.position}
-                            </p>
-                        </div>
-                    </div>
-                    <div class="add">
+                <div className="base clearFix">
+                    <HeartImg {...data} className="img"/>
+                    <div className="word">
+                        <span className="name">
+                            {data.member_name}
+                        </span>
                         <p>
-                            <span className="title">电话:</span>
-                            {data.phone}
+                            <span className="title">部门: </span>
+                            {data.depart_name}
                         </p>
                         <p>
-                            <span className="title">邮箱</span>
-                            {data.email}
+                            <span className="title">职位</span>
+                            {data.position}
                         </p>
                     </div>
+                </div>
+                <div className="add">
+                    <p>
+                        <span className="title">电话:</span>
+                        {data.phone}
+                    </p>
+                    <p>
+                        <span className="title">邮箱</span>
+                        {data.email}
+                    </p>
                 </div>
             </div>
         )

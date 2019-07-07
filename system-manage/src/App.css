@@ -50,3 +50,16 @@
 .g-filter-letter .list li:hover{
   background: #f3f3f3;
 }
+.g-breadcrumb{
+  height: 50px;
+  line-height: 50px;
+  border-bottom: 1px solid #cadeee;
+  padding-left: 20px;
+  font-size: 13px;
+}
+.g-breadcrumb a{
+  color:#19be6b;
+}
+.g-breadcrumb .separator{
+  margin:0 5px;
+}
