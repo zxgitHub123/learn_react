@@ -8,7 +8,7 @@ class List extends React.Component{
     render(){
         if(this.props.data.length>0){
             const items=this.props.data.map((item)=>{
-                return <ListItem key={item.member_id} type={this.props.type} {...item} member={item} gotoDetail={this.props.gotoDetail} changeCur={this.props.changeCur} setLike={this.props.setLike}/>
+                return <ListItem key={item.member_id} type={this.props.type} {...item} member={item} gotoDetail={this.props.gotoDetail} addCommon={this.props.addCommon} delCommon={this.props.delCommon} delIcon={this.props.delIcon} changeCur={this.props.changeCur} delExternal={this.props.delExternal} setLike={this.props.setLike}/>
             })
             return <div className="content" style={{height:height}}>
                 {this.props.header && this.props.header()}
@@ -20,7 +20,7 @@ class List extends React.Component{
             return (
                 <div className="g-empty">
                     <Icon type="frown-o" style={{color:'#b8e0c8',fontSize:'50px'}}></Icon>
-                    <p className="word">暂无数据</p>
+                    <p className="word">暂无数杮</p>
                 </div>
             )
            
@@ -36,7 +36,6 @@ function getData(state,ownProps){
     })
 }
 export default connect((state,ownProps)=>{
-    console.log(getData(state,ownProps));
     return {
         data:getData(state,ownProps)
     }
@@ -48,6 +47,32 @@ export default connect((state,ownProps)=>{
                 param:member
             })
         },
+        delCommon(member){
+            dispatch({
+                type:'delCommon',
+                member
+            })
+            dispatch({
+                type:'editExternal',
+                param:{...member,like:!member.like*1}
+            })
+        },
+        addCommon(member){
+            dispatch({
+                type:'addCommon',
+                member
+            })
+            dispatch({
+                type:'editExternal',
+                param:{...member,like:!member.like*1}
+            })
+        },
+       delExternal(member_id){
+            dispatch({
+                type:"delExternal",
+                param:member_id
+            })
+       },
         setLike(flag,member_id){
             dispatch({
                 type:'changeLike',

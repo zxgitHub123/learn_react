@@ -1,8 +1,15 @@
 import React from "react";
-export default class  extends React.Component{
+import {Switch,Route} from "react-router-dom";
+import Detail from "./detail";
+import List from "./commonList";
+class  Common extends React.Component{
     render(){
         return(
-        <div></div>
+            <Switch>
+                <Route path="/attendence/common/list" component={List}/>
+                <Route path="/attendence/common/detail" render={(props)=><Detail {...props} type="common"/>}/>
+            </Switch>
         )
     }
 }
+export default Common;

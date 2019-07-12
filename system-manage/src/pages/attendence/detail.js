@@ -37,6 +37,13 @@ class Detail extends React.Component{
             btn_loading:false
         }
     }
+    del=()=>{
+        this.props.delExternal(this.props.data.member_id);
+        this.props.history.push("/attendence/external/list");
+    }
+    edit=()=>{
+        this.props.history.push("/attendence/external/edit");
+    }
     render(){
         const {data}=this.props;
         return(
@@ -45,7 +52,7 @@ class Detail extends React.Component{
                 {this.props.type!=='external'?null:(
                     <div className="top-col">
                         <Button type="default" style={{marginRight:'20px'}} loading={this.state.btn_loading} onClick={this.del}> 删除</Button>
-                        <Button type="primary" loading={this.state.btn_loading} onClick={this.edit}>编辑dz</Button>
+                        <Button type="primary" loading={this.state.btn_loading} onClick={this.edit}>编辑</Button>
                     </div> 
                 )}
                 <div className="base clearFix">
@@ -84,10 +91,10 @@ export default connect((state)=>{
     }
 },(dispatch)=>{
     return {
-        delExter(member_id){
+        delExternal(member_id){
             dispatch({
                 type:'delExternal',
-                member_id
+                param:member_id
             })
         },
         delCommon(member){

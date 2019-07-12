@@ -5,7 +5,10 @@ import {Provider} from "react-redux";
 import store from "./store/index";
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-
+if (module.hot) {
+    // 模块自己就接收更新
+    module.hot.accept();
+  }
 ReactDOM.render(
    <Provider store={store}>
        <Router/>

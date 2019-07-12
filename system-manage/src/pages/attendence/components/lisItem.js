@@ -5,22 +5,23 @@ class Heart extends React.Component{
     setLike=()=>{
         const flag=this.props.like ? 0:1;
         if(this.props.type!=='getCommon') this.props.setLike(flag,this.props.id);
-        // if(flag===0){
-        //     this.props.delCommon(this.props.member);
-        // }else {
-        //     this.props.addCommon(this.props.member);
-        // }
+        if(flag===0){
+            this.props.delCommon(this.props.member);
+        }else {
+            this.props.addCommon(this.props.member);
+        }
     }
     render(){
         return  <Tooltip title={this.props.like===1?'取消关注':'关注'} placement="bottom">
+                   
                     <Icon onClick={this.setLike} type={this.props.like===1?'heart':'heart-o'} className={'heart '+(this.props.like?'like':'')} style={{fontSize:'16px'}}/>
                 </Tooltip>
     }
 }
 class Del extends React.Component{
     handleDel=()=>{
-        this.props.del(this.props.id);
-        this.props.delCommon({member_id:this.props.is});
+        this.props.delExternal(this.props.id);
+        this.props.delCommon({member_id:this.props.id});
     }
     render(){
         return <Icon type="delete" className="del" onClick={this.handleDel}/>
@@ -46,8 +47,8 @@ class ListItem extends React.Component{
                         {this.props.leader && <span className="leader">部分负责人</span>}
                     </p>
                 </div>
-                <Heart type={this.props.type} like={this.props.like} memeber={this.props.member} setLike={this.props.setLike}/>
-                {this.props.delIcon ? <Del id={this.props.member_id}/>:null}
+                <Heart type={this.props.type} like={this.props.like} member={this.props.member} setLike={this.props.setLike} id={this.props.member_id} delCommon={this.props.delCommon} addCommon={this.props.addCommon}/>
+                {this.props.delIcon ? <Del id={this.props.member_id} delExternal={this.props.delExternal} delCommon={this.props.delCommon}/>:null}
             </div>
         }else{
             content=<Row className="clearFix listRow">
@@ -62,8 +63,8 @@ class ListItem extends React.Component{
                         {this.props.phone}
                     </Col>
                     <Col span={4} className="col">
-                        <Heart type={this.props.type} like={this.props.like} member={this.props.member} setLike={this.props.setLike}/>
-                        {this.props.delIcon?<Del id={this.props.member_id}/>:null}
+                        <Heart type={this.props.type} like={this.props.like} member={this.props.member} setLike={this.props.setLike} id={this.props.member_id}/>
+                        {this.props.delIcon?<Del id={this.props.member_id} delExternal={this.props.delExternal} delCommon={this.props.delCommon}/>:null}
                     </Col>
                 </Row>
         }

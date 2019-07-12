@@ -37,13 +37,12 @@ const initExter=[
         member_id:8,
         member_name:'连连',
         like:1,
-        phone:'18201266166'
+        phone:['18201266166']
     }
 ]
 function staff(staff=initStaff,action){
     switch(action.type){
         case 'changeLike':
-            console.log(111);
             return staff.map(item=>{
                 if(item.member_id===action.member_id){
                     item.like=action.flag
@@ -68,7 +67,24 @@ function common(common=initCommon,action){
     }
 }
 function external(external=initExter,action){
-    return external;
+    switch(action.type){
+        case 'editExternal':
+            return external.map(item=>{
+                if(item.member_id===action.param.member_id){
+                    item={...item,...action.param}
+                }
+                return item;
+            });
+        case 'addExternal':
+            external.push({...action.param,...{member_id:new Date().getTime()}});
+            return external;
+        case 'delExternal':
+            return external.filter(item=>{
+                return item.member_id!==action.param;
+            })
+        default:
+            return external;
+    }
 }
 function curMember(curMember,action){
     switch(action.type){
