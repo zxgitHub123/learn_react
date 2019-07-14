@@ -10,7 +10,7 @@ class Detail extends React.Component{
         this.breadcrumb={
             'common':[
                 {
-                    link:'/common/list',
+                    link:'/attendence/common/list',
                     label:'常用联系人'
                 },{
                     label:'常用联系人详情'
@@ -18,7 +18,7 @@ class Detail extends React.Component{
             ],
             'external':[
                 {
-                    link:'/external/list',
+                    link:'/attendence/external/list',
                     label:'外部联系人'
                 },{
                     label:'外部联系人详情'

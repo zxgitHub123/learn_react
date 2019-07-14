@@ -10,7 +10,7 @@ class Detail extends Component {
         this.breadcrumbs = {
             'common':[
                 {
-                    link:'/common/list',
+                    link:'/attendence/common/list',
                     label:'常用联系人'
                 },
                 {
@@ -19,7 +19,7 @@ class Detail extends Component {
             ],
             'external':[
                 {
-                    link:'/external/list',
+                    link:'/attendence/external/list',
                     label:'外部联系人'
                 },
                 {
@@ -28,7 +28,7 @@ class Detail extends Component {
             ],
             'staff':[
                 {
-                    link:'/staff/list',
+                    link:'/attendence/staff/list',
                     label:'公司职员'
                 },
                 {

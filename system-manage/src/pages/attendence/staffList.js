@@ -24,7 +24,7 @@ class StaffList extends React.Component{
         return (
             <div style={{...this.props.style}}>
                 <Header selectLetter={this.selectLetter} letter={this.state.letter} search={this.search} placeholder="请输入姓名"/>
-                <MemberList filed1='attendence' filed2="staff" type="getStaff" url="/api/get/staffList" title="公司职员" letter={this.state.letter} keyword={this.state.keyword} gotoDetail={this.gotoDetail}/>
+                <MemberList filed1='attendence' filed2="staff" url="/api/get/staffList" title="公司职员" letter={this.state.letter} keyword={this.state.keyword} gotoDetail={this.gotoDetail}/>
             </div>
         )
     }   

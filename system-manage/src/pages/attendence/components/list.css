@@ -55,10 +55,10 @@
     font-size: 12px;
     background: #25c870;
 }
-.list .cartItem .heart.like{
+.heart.like{
     color:#25c870;
 }
-.list .cartItem .heart,.list .cartItem .del{
+.heart,.del{
     position: absolute;
     right:0;
     top:0;
@@ -66,10 +66,13 @@
     height: 16px;
     margin:auto;
 }
-.list .cartItem .del{
+.del{
     right:30px;
     font-size: 16px;
     color:#8999a9;
+}
+.listRow .heart {
+    right: 80px;
 }
 /* 列表样式 */
 .listRow{

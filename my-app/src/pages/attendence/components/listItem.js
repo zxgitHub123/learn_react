@@ -4,6 +4,7 @@ import {Icon,Tooltip,Row, Col} from 'antd'
 class Heart extends Component{
     setLike(){
         const flag = this.props.like ? 0:1;
+        console.log(this.props.type);
         if(this.props.type !== 'getCommon')  this.props.setCommon(flag,this.props.id);
         if(flag === 0){
             this.props.delCommon(this.props.member);

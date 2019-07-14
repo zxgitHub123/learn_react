@@ -26,7 +26,7 @@ class Main extends Component {
             <div style={{...this.props.style}}>
                 <Header selectLetter={this.selectLetter.bind(this)} letter={this.state.letter} search={this.search.bind(this)}
                         placeholder='请输入姓名'/>
-                <MemberList type='getCommon' filed1='attrendance' filed2='commons' url="/api/get/commonList" title="常用联系人" letter={this.state.letter} keyword={this.state.keyword} gotoDetail={this.gotoDetail}/>
+                <MemberList filed1='attrendance' filed2='commons' url="/api/get/commonList" title="常用联系人" letter={this.state.letter} keyword={this.state.keyword} gotoDetail={this.gotoDetail}/>
             </div>
         )
     }

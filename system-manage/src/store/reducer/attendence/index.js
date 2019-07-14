@@ -7,7 +7,7 @@ const initStaff=[
         leader:false,
         letter:'Z',
         position:'前端开发人员',
-        like:1,
+        like:0,
         dpart_name:'web'
     },
     {
@@ -36,7 +36,7 @@ const initExter=[
     {
         member_id:8,
         member_name:'连连',
-        like:1,
+        like:0,
         phone:['18201266166']
     }
 ]

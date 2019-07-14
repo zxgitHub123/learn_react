@@ -4,7 +4,7 @@ import {Icon,Tooltip,Row,Col} from "antd";
 class Heart extends React.Component{
     setLike=()=>{
         const flag=this.props.like ? 0:1;
-        if(this.props.type!=='getCommon') this.props.setLike(flag,this.props.id);
+        this.props.setLike(flag,this.props.id);
         if(flag===0){
             this.props.delCommon(this.props.member);
         }else {
@@ -63,7 +63,7 @@ class ListItem extends React.Component{
                         {this.props.phone}
                     </Col>
                     <Col span={4} className="col">
-                        <Heart type={this.props.type} like={this.props.like} member={this.props.member} setLike={this.props.setLike} id={this.props.member_id}/>
+                        <Heart type={this.props.type} like={this.props.like} member={this.props.member} setLike={this.props.setLike} id={this.props.member_id} delCommon={this.props.delCommon} addCommon={this.props.addCommon}/>
                         {this.props.delIcon?<Del id={this.props.member_id} delExternal={this.props.delExternal} delCommon={this.props.delCommon}/>:null}
                     </Col>
                 </Row>

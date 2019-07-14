@@ -8,6 +8,7 @@ class  Common extends React.Component{
             <Switch>
                 <Route path="/attendence/common/list" component={List}/>
                 <Route path="/attendence/common/detail" render={(props)=><Detail {...props} type="common"/>}/>
+            	<Route component={List}/>
             </Switch>
         )
     }
