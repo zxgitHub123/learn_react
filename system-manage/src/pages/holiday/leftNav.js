@@ -5,16 +5,16 @@ class LeftNav extends React.Component{
 		return (
 			<ul className="leftNav">
 				<li className="nav">
-					<Link to="/holiday/type" activeClassName="g-navActive" className="link">假期类型</Link>
+					<Link to="/holiday/type" activeClassName="g_navActive" className="link">假期类型</Link>
 				</li>
 				<li className="nav">
-					<Link to="/holiday/day_off" activeClassName="g-navActive" className="link">调休</Link>
+					<Link to="/holiday/dayoff" activeClassName="g_navActive" className="link">调休</Link>
 				</li>
 				<li className="nav">
-					<Link to="/holiday/award" activeClassName="g-navActive" className="link">奖励假</Link>
+					<Link to="/holiday/award" activeClassName="g_navActive" className="link">奖励假</Link>
 				</li>
 				<li className="nav">
-					<Link to="/holiday/annual" activeClassName="g-navActive" className="link">年假</Link>
+					<Link to="/holiday/annual" activeClassName="g_navActive" className="link">年假</Link>
 				</li>
 			</ul>
 		)

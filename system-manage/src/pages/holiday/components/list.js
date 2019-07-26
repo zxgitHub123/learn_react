@@ -7,10 +7,11 @@ class List extends React.Component{
 		super(props);
 		this.selectedAll=false;		
 	}
-	selectedAll=()=>{
-		this.props.onSelectAll()
+	selectAll=()=>{
+		this.props.selectAll(!this.selectedAll);
 	}
 	render(){
+		console.log(this.props.data);
 		this.height=fixHeight({offset:this.props.offset || 0});
 		this.selectedAll=this.props.data.filter((item)=>{
 			return item.checked
@@ -19,26 +20,26 @@ class List extends React.Component{
 			<div className="holiday_list">
 				<div className="list-wrap">
 					{
-						this.props.data.length>0?
-						<div class="list-header">
+						this.props.data.length>0 &&
+						<div className="list-header">
 							{this.props.title}
-							{this.props.data.filter((item)=>{return item.checked}).length>0?<Button>批量删除</Button>:null}
+							{this.props.data.filter((item)=>{return item.checked}).length>0?<Button onClick={()=>{this.props.showPop({},true)}}>批量删除</Button>:null}
 						</div>
 					}
 					{
 						this.props.data.length>0?
-						<div className="list-body">
-							<table class="list-table">
+						<div className="list-body" style={{height:(this.height-92)+'px'}}>
+							<table className="list-table">
 								<thead>
 									<tr>
-										{this.props.cols.map((item,index)=>{
+										{this.props.col.map((item,index)=>{
 											if(item.type==='selection'){
 												return <td key={index} width={item.width && item.width}>
-													<Checkbox/>
+													<Checkbox onChange={this.selectAll} checked={this.selectedAll}/>
 												</td>
 											}else{
 												return <td key={index} width={item.width && item.width}>
-													{item.label}
+													{item.title}
 												</td>
 											}
 										})}
@@ -47,21 +48,22 @@ class List extends React.Component{
 								<tbody>
 									{this.props.data.length>0 && this.props.data.map((item)=>{
 										return <tr key={item.id}>
-												{this.props.cols.map(col,index)=>{
-													if(col.type==='action'){
+												{this.props.col.map((col,index)=>{
+													if(col.key==='action'){
 														return <td key={index} width={col.width}>
 															{col.render(item)}
 														</td>
 													}else if(col.type==='selection'){
 														return <td key={index} width={col.width}>
-																<Checkbox/>
+																<Checkbox checked={item.checked} onChange={()=>{this.props.selectOne({...item,checked:!item.checked})}}/>
 															</td>
 													}else{
-														return <td key={index} width={col.width}>{item[col.key+'_text']?item[col.ey+'_text':item[col.key]]}</td>
+														return <td key={index} width={col.width}>{item[col.key+'_text']?item[col.key+'_text']:item[col.key]}</td>
 													}
-												}}
+											})}
 										</tr>	
-									})}
+									})
+								}
 								</tbody>
 							</table>
 						</div>:

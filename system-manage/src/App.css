@@ -119,3 +119,48 @@
   padding:10px 0 10px 20px;
   border-bottom: 1px solid #cadeee;
 }
+/* 表格 */
+.list-wrap .list-header{
+  border:1px solid #b7c8d0;
+  border-bottom: none;
+  line-height: 50px;
+  height: 50px;
+  padding-left: 20px;
+  font-size: 14px;
+  color:#333;
+  border-radius:4px 4px 0 0;
+}
+.list-wrap .list-body{
+  border:1px solid #b7c8d0;
+  border-top:none;
+  border: 0 0 4px 4px;
+}
+.list-wrap .list-body tbody{
+  overflow-y:auto;
+}
+.list-wrap .list-table{
+  width:100%;
+  border-collapse: collapse;
+}
+.list-wrap td{
+  padding:0 20px;
+  height: 48px;
+  color:#8899a9;
+  font-size: 14px;
+}
+.list-wrap thead{
+  background: #f2f5f9;
+  color: #333333;
+}
+.list-wrap tbody tr{
+  border-bottom: 1px solid #e9eaec;
+}
+.list-wrap tbody .action{
+  cursor: pointer;
+  font-size: 14px;
+  color:#24c875;
+  margin-right: 15px;
+}
+.list-wrap tbody tr:hover{
+  background: #defef5;
+}

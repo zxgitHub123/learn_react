@@ -1,5 +1,5 @@
 import React from "react";
-import SearchName from "./search.js";
+import SearchName from "../../../components/search";
 import FilterLetter from "./filter-letter.js";
 class Header extends React.Component{
     render(){

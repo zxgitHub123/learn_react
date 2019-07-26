@@ -9,7 +9,7 @@ class Main extends React.Component{
 		return (
 			<Switch>
 				<Route path="/holiday/type" component={Type}/>
-				<Route path="/holiday/day-off" component={Dayoff}/>
+				<Route path="/holiday/dayoff" component={Dayoff}/>
 				<Route path="/holiday/award" component={Award}/>
 				<Route path="/holiday/annual" component={Annual}/>
 				<Route component={Type}/>
