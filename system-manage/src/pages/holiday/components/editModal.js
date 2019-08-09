@@ -2,10 +2,6 @@ import React from "react";
 import {Modal} from "antd"
 import {connect} from "react-redux";
 class EditModal extends React.Component{
-	constructor(props){
-		super(props);
-
-	}
 	hideModal=()=>{
 		this.props.hideModal();
 	}

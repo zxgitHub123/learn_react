@@ -221,7 +221,7 @@ function award(award=initAward,action){
 			});
 		case 'selectedOne_award':
 				return award.map(item=>{
-					if(item.id==action.params.id){
+					if(item.id===action.params.id){
 						return {...item,checked:action.params.checked}
 					}else{
 						return item;
@@ -241,7 +241,7 @@ function annual(annual=initAnnual,action){
 			});
 		case 'edit_annual':
 			return annual.map(item=>{
-				if(item.id==action.params.id){
+				if(item.id===action.params.id){
 					return {...item,...action.params}
 				}else{
 					return item

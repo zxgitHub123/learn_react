@@ -1,5 +1,4 @@
 import React from "react";
-import {connect} from "react-redux";
 import List from "./annualRuleList";
 import Edit from "./annualRuleEdit";
 class AnnualRulePanel extends React.Component{

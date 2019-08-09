@@ -1,7 +1,6 @@
 import React from "react";
 import {Button,Icon} from "antd";
 import {connect} from "react-redux";
-import { dispatch } from "rxjs/internal/observable/range";
 class Rule extends React.Component{
     changeVlaue=(index,field,value)=>{
         value=`${value}`.replace(/[^\d]/g,'');

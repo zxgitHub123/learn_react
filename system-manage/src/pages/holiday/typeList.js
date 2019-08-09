@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import List from "./components/list";
+import List from "../../components/list";
 class TypeList extends React.Component{
 	render(){
 		console.log(this.props.data)

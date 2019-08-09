@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import List from "./components/list";
-import { dispatch } from "rxjs/internal/observable/pairs";
+import List from "../../components/list";
 class awardList extends React.Component{
     render(){
         return(
@@ -12,10 +11,8 @@ class awardList extends React.Component{
 function getAwardList(state,keyword){
     console.log(state);
     console.log(keyword);
-    return state.holiday.award.filter(item=>{
-        if(item.name.indexOf(keyword)>=0 || item.department_name.indexOf(keyword)>=0){
-            return item;
-        }
+    return state.holiday.award.filter((item)=>{
+        return item.name.indexOf(keyword)>=0 || item.department_name.indexOf(keyword)>=0
     })
 }
 export default connect((state,ownProps)=>{

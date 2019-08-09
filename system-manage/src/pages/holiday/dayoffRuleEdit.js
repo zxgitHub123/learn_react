@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Button,Icon,message} from "antd";
-import { rule } from "postcss";
+import {Button} from "antd";
 class DayoffRuleEdit extends React.Component{
     constructor(props){
         super(props);

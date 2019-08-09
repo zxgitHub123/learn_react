@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import { dispatch } from "rxjs/internal/observable/range";
-import List from "./components/list"
+import List from "../../components/list"
 function getDayOffList(data,keyword){
     if(!keyword) return data;
     else{

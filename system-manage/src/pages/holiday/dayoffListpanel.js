@@ -128,9 +128,9 @@ export default class  extends React.Component{
         }
         if(type==='num' && decimal>0){
             value=`${value}`.replace(/^\./,'');
-            value=`${value}`.replace(/[^\d\.]/g,'');
+            value=`${value}`.replace(/[^\d.]/g,'');
             const valueArr=`${value}`.split(".");
-            if(valueArr[1]!=undefined){
+            if(valueArr[1]!==undefined){
                 value=valueArr[0]+"."+valueArr[1].slice(0,decimal);
             }else{
                 value=valueArr[0]

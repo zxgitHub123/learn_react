@@ -1,7 +1,7 @@
 import React from "react";
 import {Checkbox,Button,Icon} from "antd";
-import "./list.css";
-import fixHeight from "../../../js/winHeight";
+import "../css/list.css";
+import fixHeight from "../js/winHeight";
 class List extends React.Component{
 	constructor(props){
 		super(props);
@@ -57,7 +57,10 @@ class List extends React.Component{
 														return <td key={index} width={col.width}>
 																<Checkbox checked={item.checked} onChange={()=>{this.props.selectOne({...item,checked:!item.checked})}}/>
 															</td>
-													}else{
+													}else if(col.render){
+														return <td key={index} width={col.width}>{col.render(item)}</td>
+													}
+													else{
 														return <td key={index} width={col.width}>{item[col.key+'_text']?item[col.key+'_text']:item[col.key]}</td>
 													}
 											})}

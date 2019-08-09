@@ -1,6 +1,4 @@
 import React from "react";
-import {Button} from 'antd';
-import {connect} from "react-redux";
 import List from "./dayoffRuleList";
 import Edit from "./dayoffRuleEdit";
 class dayOffRulePannel extends React.Component{

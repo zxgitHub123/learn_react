@@ -1,16 +1,22 @@
 import React from "react";
-import "./css/list.css";
-import fixHeight from "../../js/winHeight.js";
-class GList extends React.Component{
+import {connect} from "react-redux";
+import List from "../../components/list";
+import {Button} from 'antd';
+class AttList extends React.Component{
     render(){
-        let height=fixHeight({offset:this.props.offset || 0})
         return(
-            <div className="list">
-                <div className="list-wrap">
-                    
+            <div>
+                <div className="header">
+                    <Button onClick={()=>{this.props.changeStatus('edit','add_att_group')}}>新增考勤分组</Button>
                 </div>
+                <List col={this.props.col} data={this.props.data}/>
             </div>
+         
         )
     }
 }
-export default GList;
+export default connect((state)=>{
+    return{
+        data:state.att.att_group
+    }
+})(AttList);

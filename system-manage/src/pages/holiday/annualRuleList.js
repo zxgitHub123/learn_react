@@ -1,7 +1,7 @@
 import React from "react";
 import {Button} from 'antd';
 import {connect} from "react-redux";
-import List from "./components/list";
+import List from "../../components/list";
 class AnnualRuleList extends React.Component{
     constructor(props){
         super(props);
@@ -29,8 +29,8 @@ class AnnualRuleList extends React.Component{
                 <Button onClick={()=>this.props.changeEditSate(true)}>修改规则</Button>
             </div>
             <div>
-                {this.props.type==1?'手动维护':'手动维护+司龄（自动累加）+工龄（自动累加)'}
-                {this.props.type==1?null:
+                {this.props.type===1?'手动维护':'手动维护+司龄（自动累加）+工龄（自动累加)'}
+                {this.props.type===1?null:
                 <List data={this.props.rules} col={this.col}/>
                 }
             </div>
