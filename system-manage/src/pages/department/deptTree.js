@@ -1,0 +1,180 @@
+import React from "react";
+import {Icon,Dropdown,Menu,Modal,message} from 'antd';
+import {connect} from "react-redux";
+import {updateDept} from "../../js/initBaseData";
+import Layout from "../../components/layout";
+class Dept extends React.Component{
+    constructor(props){
+        super(props);
+        this.state={
+            showHandle:false,
+            changeSpread:false
+        }
+    }
+    getMenu=(dept_id,dept_name)=>{
+        return (
+            <Menu onClick={()=>{this.action()}}>
+               <Menu.Item key="0">
+                    新增子部门
+               </Menu.Item>
+               {
+                   dept_id>0?<Menu.Item key="1">
+                       编辑部门
+                   </Menu.Item>:null
+               }
+               {
+                !this.checkCildren(dept_id)?<Menu.Item key="2">删除部门</Menu.Item>:null
+               }
+            </Menu>)
+    }
+    checkCildren=(dept_id)=>{
+        return this.props.depts.find((dept)=>{return dept.dept_pid*1===dept_id*1})
+    }
+    changeCaretState=(dept)=>{
+        this.props.depts.some(item=>{
+            if(item.dept_id*1===dept.dept_id*1){
+                item.spread=!item.spread;
+                return true;
+            }
+        })
+        this.setState((prevState)=>{
+            return {
+                changeSpread:!prevState.changeSpread
+            }
+        })
+    }
+    action=(key,dept_id,dept_name)=>{
+        if(key*1===0){
+            this.props.changeDept(dept_id,'add');
+        }else if(key*1===1){
+            this.props.changeDept(dept_id,'edit',dept_name);
+        }else{
+            this.props.changeDept(dept_id,'del');
+        }
+    }
+    render(){
+        const props=this.props;
+        return <div data-changeSpread={this.state.changeSpread}>
+            {
+                props.depts.map(dept=>{
+                    if(dept.dept_id*1===props.pid*1){
+                        return <div key={dept.dept_id} style={{paddingLeft:`${8*props.level}px`}}>
+                            <span className="dept_name">
+                                {this.checkCildren(dept.dept_id)?<Icon style={{color:dept.dept_id===props.selected_id?'#25c870':''}} className='arrow' type={dept.spread?'caret-down':'caret-right'} onClick={()=>{this.changeCaretState(dept)}}/>:null}
+                                <span style={{color:dept.dept_id===props.selected_id?'#25c870':''}}>{dept.dept_name}</span>
+                                <Dropdown overlay={this.getMenu(dept.dept_id,dept.dept_name)} trigger={['click']}>
+                                    <Icon type="eidt" className="ellipsis" style={{color:dept.dept_id===props.selected_id?'#25c870':''}}/>
+                                </Dropdown>
+                            </span>
+                            {dept.spread?<Dept selected_id={props.selected_id} pid={dept.dept_id} selectDept={props.selectDept} changeDept={props.changeDept} depts={props.depts} level={props.level +1}/>:null}
+                        </div>
+                    }
+                })
+            }
+        </div>
+    }
+}
+class DeptTree extends React.Component{
+    constructor(props){
+        super(props);
+        this.modelType='';
+        this.param='';
+        this.state={
+            depts:[],
+            addDeptModal:false,
+            dept_name:''
+        }
+    }
+    changeDept=(dept_id,type,dept_name='')=>{
+        this.modelType=type;
+        this.param={
+            add:{
+                url:'/dept/add',
+                params:{
+                    dept_id:dept_id
+                },
+                info:{
+                    error:'部门添加失败',
+                    success:'部门添加成功'
+                },
+                title:'新增子部门'
+            },
+            edit:{
+                url:'/dept/edit',
+                params:{
+                    dept_id:dept_id
+                },
+                info:{
+                    error:'部门编辑失败',
+                    success:'部门编辑成功'
+                },
+                title:'编辑部门'
+            },
+            del:{
+                url:'/dept/del',
+                params:{
+                    dept_id:dept_id
+                },
+                info:{
+                    error:'部门删除失败',
+                    success:'部门删除成功'
+                },
+                title:'删除部门'
+            }
+        }[type]
+        this.setState({
+            addDeptModal:true,
+            dept_name:dept_name
+        })
+    }
+    changeDeptName=(event)=>{
+        const value=event.target.value;
+        this.setState({
+            dept_name:value
+        })
+    }
+    closeModal=()=>{
+        this.setState({
+            addDeprModal:false
+        })
+    }
+    updateList=()=>{
+        this.updateDept();
+    }
+    verifyForm(dept_name){
+        if(!dept_name){
+            message.warning('请输入部门名称');
+            return false;
+        }else{
+            return true;
+        }
+    }
+    okAction=()=>{
+        if(this.modelType!=='del' && this.verifyForm(this.state.dept_name.replace(/^\s+|\s+$/g,''))) return false;
+    }
+    render(){
+        return <div className="m-deprTree">
+            <div className="部门管理"></div>
+            <Dept pid={-1}/>
+            {
+                this.state.addDeptModal?<Modal visible={true} title={this.param.title}>
+                    {this.modelType!=='del'?<table>
+                        <tbody>
+                            <tr>
+                                <td className="in-h">
+                                    部门名称
+                                    <span className="in-star"></span>
+                                </td>
+                                <td>
+                                    <input type="text"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>:<p>部门中的职员也会被删除，确定删除该部门？</p>}
+                </Modal>:null
+            }
+           
+        </div>
+    }
+}
+export default DeptTree;
