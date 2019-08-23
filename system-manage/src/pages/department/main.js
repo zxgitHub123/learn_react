@@ -1,6 +1,9 @@
 import React from "react";
-import {Modal} from "antd";
+import {Modal,Button,message} from "antd";
 import List from "./list";
+import {connect} from "react-redux";
+import {updateStaff,updateDept} from "../../js/update";
+import FilterDept from "../../components/filter-dept";
 class Main extends React.Component{
     constructor(props){
         super(props);
@@ -25,7 +28,7 @@ class Main extends React.Component{
                 key:'action',
                 title:'操作',
                 render:(item)=>{
-                    return <div class="action">
+                    return <div className="action">
                         <span onClick={()=>{this.showModal(item)}}>修改部门</span>
                     </div>
                 }
@@ -43,10 +46,55 @@ class Main extends React.Component{
             visible:false
         })
     }
+    changeDept=(dept)=>{
+        
+    }
     render(){
         return <div>
             <List col={this.col}/>
-            <Modal visible={this.state.visible} data={this.currentData} hideModal={this.hideModal}/>
+            <Modal visible={this.state.visible} onCancel={this.hideModal} hideModal={this.hideModal}>
+                <table className="g-form">
+                    <tbody>
+                        <tr>
+                            <td className="in-th">
+                                姓名
+                                <span className="in-star">
+                                    *
+                                </span>
+                            </td>
+                            <td>
+                                <span>
+                                    {this.currentData.member_name}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className="in-th">
+                                部门
+                                <span className="in-star">
+                                    *
+                                </span>
+                            </td>
+                            <td>
+                                <span>
+                                    {this.currentData.dept_name}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className="in-th">
+                                新部门
+                                <span className="in-star">
+                                    *
+                                </span>
+                            </td>
+                            <td>
+                                <FilterDept onChange={this.changeDept}/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </Modal>
         </div>
     }
 }

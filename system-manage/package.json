@@ -140,5 +140,5 @@
   "devDependencies": {
     "react-router-dom": "^5.0.1"
   },
-  "poxry":"http://localhost:4000"
+  "poxry": "http://localhost:4000"
 }

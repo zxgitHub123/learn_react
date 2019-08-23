@@ -1,8 +1,7 @@
 import React from "react";
 import {Icon,Dropdown,Menu,Modal,message} from 'antd';
 import {connect} from "react-redux";
-import {updateDept} from "../../js/initBaseData";
-import Layout from "../../components/layout";
+import {updateDept} from "../../js/update";
 class Dept extends React.Component{
     constructor(props){
         super(props);
@@ -13,7 +12,7 @@ class Dept extends React.Component{
     }
     getMenu=(dept_id,dept_name)=>{
         return (
-            <Menu onClick={()=>{this.action()}}>
+            <Menu onClick={({key})=>{this.action(key,dept_id,dept_name)}}>
                <Menu.Item key="0">
                     新增子部门
                </Menu.Item>
@@ -35,6 +34,8 @@ class Dept extends React.Component{
             if(item.dept_id*1===dept.dept_id*1){
                 item.spread=!item.spread;
                 return true;
+            }else{
+                return false;
             }
         })
         this.setState((prevState)=>{
@@ -54,20 +55,22 @@ class Dept extends React.Component{
     }
     render(){
         const props=this.props;
-        return <div data-changeSpread={this.state.changeSpread}>
+        return <div>
             {
                 props.depts.map(dept=>{
-                    if(dept.dept_id*1===props.pid*1){
+                    if(dept.dept_pid*1===props.pid*1){
                         return <div key={dept.dept_id} style={{paddingLeft:`${8*props.level}px`}}>
-                            <span className="dept_name">
+                            <span className="dept_name" onClick={(e)=>{e.stopPropagation();props.selectDept(dept.dept_id)}}>
                                 {this.checkCildren(dept.dept_id)?<Icon style={{color:dept.dept_id===props.selected_id?'#25c870':''}} className='arrow' type={dept.spread?'caret-down':'caret-right'} onClick={()=>{this.changeCaretState(dept)}}/>:null}
                                 <span style={{color:dept.dept_id===props.selected_id?'#25c870':''}}>{dept.dept_name}</span>
                                 <Dropdown overlay={this.getMenu(dept.dept_id,dept.dept_name)} trigger={['click']}>
-                                    <Icon type="eidt" className="ellipsis" style={{color:dept.dept_id===props.selected_id?'#25c870':''}}/>
+                                    <Icon type="edit" className="ellipsis" style={{color:dept.dept_id===props.selected_id?'#25c870':''}}/>
                                 </Dropdown>
                             </span>
                             {dept.spread?<Dept selected_id={props.selected_id} pid={dept.dept_id} selectDept={props.selectDept} changeDept={props.changeDept} depts={props.depts} level={props.level +1}/>:null}
                         </div>
+                    }else{
+                        return null;
                     }
                 })
             }
@@ -89,7 +92,7 @@ class DeptTree extends React.Component{
         this.modelType=type;
         this.param={
             add:{
-                url:'/dept/add',
+                url:'/api/dept/add',
                 params:{
                     dept_id:dept_id
                 },
@@ -100,7 +103,7 @@ class DeptTree extends React.Component{
                 title:'新增子部门'
             },
             edit:{
-                url:'/dept/edit',
+                url:'/api/dept/edit',
                 params:{
                     dept_id:dept_id
                 },
@@ -111,7 +114,7 @@ class DeptTree extends React.Component{
                 title:'编辑部门'
             },
             del:{
-                url:'/dept/del',
+                url:'/api/dept/del',
                 params:{
                     dept_id:dept_id
                 },
@@ -135,11 +138,8 @@ class DeptTree extends React.Component{
     }
     closeModal=()=>{
         this.setState({
-            addDeprModal:false
+            addDeptModal:false
         })
-    }
-    updateList=()=>{
-        this.updateDept();
     }
     verifyForm(dept_name){
         if(!dept_name){
@@ -149,15 +149,25 @@ class DeptTree extends React.Component{
             return true;
         }
     }
-    okAction=()=>{
-        if(this.modelType!=='del' && this.verifyForm(this.state.dept_name.replace(/^\s+|\s+$/g,''))) return false;
+    submit=()=>{
+        if(this.modelType!=='del' && !this.verifyForm(this.state.dept_name.replace(/^\s+|\s+$/g,''))) return false;
+        fetch(this.param.url,{body: JSON.stringify({...this.param.params,dept_name:this.state.dept_name.replace(/^\s+|\s+$/g,'')}),method:'POST'})
+        .then((res)=>{
+            const resData=res || {}
+            if(resData.status===200){
+                this.closeModal();
+                updateDept();
+            }else{
+                message.error(resData.statusText);
+            }
+        })
     }
     render(){
         return <div className="m-deprTree">
-            <div className="部门管理"></div>
-            <Dept pid={-1}/>
+            <div className="name">部门管理</div>
+            <Dept pid={-1} level={1} changeDept={this.changeDept} selected_id={this.props.selected_id} selectDept={this.props.selectDept} depts={this.props.depts}/>
             {
-                this.state.addDeptModal?<Modal visible={true} title={this.param.title}>
+                this.state.addDeptModal?<Modal visible={true} title={this.param.title} onOk={this.submit} onCancel={this.closeModal}>
                     {this.modelType!=='del'?<table>
                         <tbody>
                             <tr>
@@ -166,7 +176,7 @@ class DeptTree extends React.Component{
                                     <span className="in-star"></span>
                                 </td>
                                 <td>
-                                    <input type="text"/>
+                                    <input type="text" value={this.state.dept_name} onChange={(e)=>{this.changeDeptName(e)}}/>
                                 </td>
                             </tr>
                         </tbody>
@@ -177,4 +187,21 @@ class DeptTree extends React.Component{
         </div>
     }
 }
-export default DeptTree;
+export default connect((state)=>{
+    return {
+        depts: (function(depts){
+            const formData=[
+                {
+                    dept_name:'测试',
+                    dept_id:6,
+                    dept_pid:-1,
+                    spread:true
+                },
+                ...depts
+            ]
+            return formData.map(dept=>{
+                return {...dept,key:dept.dept_id}
+            })
+        })(state.baseData.dept)
+    }
+})(DeptTree);
