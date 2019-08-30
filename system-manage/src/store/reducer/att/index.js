@@ -8,7 +8,7 @@ const initGroup=[
         is_flex:0,
         ex_time:0,
         last_time:0,
-        members:[{member_id:1,member_name:'秦玉琪'}],
+        members:[{id:1,member_name:'秦玉琪'}],
         is_default:0
     }
 ]

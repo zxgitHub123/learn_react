@@ -1,40 +1,42 @@
 import React from "react";
 import {connect} from "react-redux";
-import {TreeSelect } from "antd";
-const {TreeNode }=TreeSelect ;
+import { Select } from 'antd';
+const { Option } = Select;
 class FilterDept extends React.Component{
-    checkChild=(id)=>{
-        return this.props.depts.some(dept=>dept.dept_pid===id);
-    }
-    selectOption=(pid)=>{
-        return this.props.depts.map(item=>{
-            if(item.dept_pid===pid){
-                console.log(item.dept_pid);
-                return <TreeNode value={item.dept_id} title={item.dept_name} key={item.dept_id}>
-                        {this.checkChild(item.dept_id) ? this.selectOption(item.dept_id):'<TreeNode key="123"></TreeNode>'}
-                    </TreeNode>
-            }else{
-                return null;
-            }
-        })
-    }
     onChange=(value)=>{
         this.props.onChange(value);
     }
     render(){
-        return (
-            <TreeSelect
-                value=""
-                style={{ width: 300 }}
-            >
-           {this.selectOption(-1)}
-          </TreeSelect>
-        )
+        return <Select style={{width:300}} onChange={this.props.onChange}>
+            {this.props.depts.map(item=>{
+                return <Option value={JSON.stringify(item)} key={JSON.stringify(item)}>
+                    <span style={{paddingLeft:`${item.level*10}px`}}>
+                        {item.dept_name}
+                    </span>
+                </Option>
+            })}
+        </Select>
     }
 }
-
+   
+function getDepts(depts){
+    var newArr=[]
+    function fn(pid,level){
+        return depts.map(dept=>{
+            if(dept.dept_pid===pid){
+                newArr=[...newArr,{...dept,level:level}];
+                if(depts.some(item=>item.dept_pid*1===dept.id*1)){
+                    fn(dept.id,level*1+1)
+                }
+            }
+        })
+    }
+    fn(-1,0);
+    console.log(newArr);
+    return newArr
+}
 export default connect((state)=>{
     return {
-        depts:state.baseData.dept
+        depts:getDepts(state.baseData.dept)
     }
 })(FilterDept)

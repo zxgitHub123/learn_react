@@ -30,6 +30,13 @@ class Edit extends React.Component{
             }
         })
     }
+    changeGroupStaff=(value)=>{
+        this.setState((prevState)=>{
+            return {
+                formData:{...prevState.formData,members:value}
+            }
+        })
+    }
     verifyFormData=(step)=>{
         const needVerifyData={
             0:{
@@ -90,7 +97,7 @@ class Edit extends React.Component{
     render(){
         return <div>
                 {this.createHeader()}
-                {this.state.selectPerson?<SelectPerson changeFormData={this.changeFormData} changeSelectPerson={this.changeSelectPerson} type="staff" selectedData={this.state.formData.members}/>:null}
+                {this.state.selectPerson?<SelectPerson changeFormData={this.changeGroupStaff} changeSelectPerson={this.changeSelectPerson} type="staff" selectedData={this.state.formData.members}/>:null}
                 <div className="step">
                     <Steps current={this.state.step}>
                         <Step title="分组基本信息"/>
@@ -118,7 +125,7 @@ class Edit extends React.Component{
                                 <td>
                                     <Button onClick={()=>{this.changeSelectPerson(true)}}>选择人员</Button>
                                     {this.state.formData.members.map(item=>{
-                                        return <span key={item.member_id}>
+                                        return <span key={item.id}>
                                             {item.member_name}
                                         </span>
                                     })}

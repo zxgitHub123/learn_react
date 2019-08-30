@@ -16,7 +16,7 @@ class Department extends React.Component{
     }
     render(){
         return (
-           <Layout left={<DeptTree selectDept={this.selectDept} selected_id={this.state.selected_id}/>} right={<Main selected_id={this.state.selected_id}/>} type={2}/>
+           <Layout left={<DeptTree selectDept={this.selectDept} selected_id={this.state.selected_id}/>} right={<Main dept_id={this.state.selected_id}/>} type={2}/>
            )
     }
 }

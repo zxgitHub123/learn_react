@@ -2,14 +2,17 @@ import React from "react";
 import {connect} from "react-redux";
 import {Button} from 'antd';
 import Tree from "../../components/selectData";
+import {updateStaff} from "../../js/update";
 class MemEdit extends React.Component{
     constructor(props){
         super(props);
         this.state={
             formData:this.props.data || {
+                id:'',
+                dept_id:'',
+                dept_name:'',
                 member_name:'',
-                dept_id:0,
-                member_id:0
+                work_num:''
             },
             treeState:false
         }
@@ -17,6 +20,13 @@ class MemEdit extends React.Component{
     changeTreeState=(boolean)=>{
         this.setState({
             treeState:boolean
+        })
+    }
+    changeDept=(value)=>{
+        this.setState((prevState)=>{
+            return {
+                formData: Object.assign({...prevState.formData},{'dept_id':value[0].id,'dept_name':value[0].dept_name})
+            }
         })
     }
     changeFormData=(field,value)=>{
@@ -51,7 +61,8 @@ class MemEdit extends React.Component{
                    <Button onClick={()=>{this.changeTreeState(true)}}>
                        部门
                    </Button>
-                   {this.state.treeState?<Tree changeFormData={this.changeFormData} changeSelectPerson={this.changeTreeState} selectedData={this.state.formData.dept_id}/>:null}
+                   {this.state.treeState?<Tree type="dept" changeFormData={this.changeDept} changeSelectPerson={this.changeTreeState} selectedData={!this.props.data?[]:[this.state.formData]} maxNum={1}/>:null}
+                   {this.state.formData.dept_name}
                 </td>
             </tr>
             <tr>
@@ -62,7 +73,7 @@ class MemEdit extends React.Component{
                     </span>
                 </td>
                 <td>
-                    <input type="text" value={this.state.formData.member_id} onChange={(event)=>{this.changeFormData('member_id',event.target.value)}}/>
+                    <input type="text" value={this.state.formData.work_num} onChange={(event)=>{this.changeFormData('work_num',event.target.value)}}/>
                 </td>
             </tr>
             <tr>
@@ -81,11 +92,11 @@ class MemEdit extends React.Component{
 export default connect((state)=>{return state},(dispath,ownProps)=>{
     return {
         submit(data){
-            dispath({
-                type:ownProps.type,
-                param:data
+            fetch(`/api/staff/${ownProps.type}`,{body:JSON.stringify(data),method:'POST'})
+            .then((res)=>{
+                updateStaff()
+                ownProps.changeStatus('list')
             })
-            ownProps.changeStatus('list')
         }
     }
 })(MemEdit);

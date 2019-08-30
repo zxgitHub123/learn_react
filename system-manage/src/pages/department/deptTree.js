@@ -10,28 +10,28 @@ class Dept extends React.Component{
             changeSpread:false
         }
     }
-    getMenu=(dept_id,dept_name)=>{
+    getMenu=(id,dept_name)=>{
         return (
-            <Menu onClick={({key})=>{this.action(key,dept_id,dept_name)}}>
+            <Menu onClick={({key})=>{this.action(key,id,dept_name)}}>
                <Menu.Item key="0">
                     新增子部门
                </Menu.Item>
                {
-                   dept_id>0?<Menu.Item key="1">
+                   id>0?<Menu.Item key="1">
                        编辑部门
                    </Menu.Item>:null
                }
                {
-                !this.checkCildren(dept_id)?<Menu.Item key="2">删除部门</Menu.Item>:null
+                !this.checkCildren(id)?<Menu.Item key="2">删除部门</Menu.Item>:null
                }
             </Menu>)
     }
-    checkCildren=(dept_id)=>{
-        return this.props.depts.find((dept)=>{return dept.dept_pid*1===dept_id*1})
+    checkCildren=(id)=>{
+        return this.props.depts.find((dept)=>{return dept.dept_pid*1===id*1})
     }
     changeCaretState=(dept)=>{
         this.props.depts.some(item=>{
-            if(item.dept_id*1===dept.dept_id*1){
+            if(item.id*1===dept.id*1){
                 item.spread=!item.spread;
                 return true;
             }else{
@@ -44,13 +44,13 @@ class Dept extends React.Component{
             }
         })
     }
-    action=(key,dept_id,dept_name)=>{
+    action=(key,id,dept_name)=>{
         if(key*1===0){
-            this.props.changeDept(dept_id,'add');
+            this.props.changeDept(id,'add');
         }else if(key*1===1){
-            this.props.changeDept(dept_id,'edit',dept_name);
+            this.props.changeDept(id,'edit',dept_name);
         }else{
-            this.props.changeDept(dept_id,'del');
+            this.props.changeDept(id,'del');
         }
     }
     render(){
@@ -59,15 +59,15 @@ class Dept extends React.Component{
             {
                 props.depts.map(dept=>{
                     if(dept.dept_pid*1===props.pid*1){
-                        return <div key={dept.dept_id} style={{paddingLeft:`${8*props.level}px`}}>
-                            <span className="dept_name" onClick={(e)=>{e.stopPropagation();props.selectDept(dept.dept_id)}}>
-                                {this.checkCildren(dept.dept_id)?<Icon style={{color:dept.dept_id===props.selected_id?'#25c870':''}} className='arrow' type={dept.spread?'caret-down':'caret-right'} onClick={()=>{this.changeCaretState(dept)}}/>:null}
-                                <span style={{color:dept.dept_id===props.selected_id?'#25c870':''}}>{dept.dept_name}</span>
-                                <Dropdown overlay={this.getMenu(dept.dept_id,dept.dept_name)} trigger={['click']}>
-                                    <Icon type="edit" className="ellipsis" style={{color:dept.dept_id===props.selected_id?'#25c870':''}}/>
+                        return <div key={dept.id} style={{paddingLeft:`${8*props.level}px`}}>
+                            <span className="dept_name" onClick={(e)=>{e.stopPropagation();props.selectDept(dept.id)}}>
+                                {this.checkCildren(dept.id)?<Icon style={{color:dept.id===props.selected_id?'#25c870':''}} className='arrow' type={dept.spread?'caret-down':'caret-right'} onClick={()=>{this.changeCaretState(dept)}}/>:null}
+                                <span style={{color:dept.id===props.selected_id?'#25c870':''}}>{dept.dept_name}</span>
+                                <Dropdown overlay={this.getMenu(dept.id,dept.dept_name)} trigger={['click']}>
+                                    <Icon type="edit" className="ellipsis" style={{color:dept.id===props.selected_id?'#25c870':''}}/>
                                 </Dropdown>
                             </span>
-                            {dept.spread?<Dept selected_id={props.selected_id} pid={dept.dept_id} selectDept={props.selectDept} changeDept={props.changeDept} depts={props.depts} level={props.level +1}/>:null}
+                            {dept.spread?<Dept selected_id={props.selected_id} pid={dept.id} selectDept={props.selectDept} changeDept={props.changeDept} depts={props.depts} level={props.level +1}/>:null}
                         </div>
                     }else{
                         return null;
@@ -88,13 +88,13 @@ class DeptTree extends React.Component{
             dept_name:''
         }
     }
-    changeDept=(dept_id,type,dept_name='')=>{
+    changeDept=(id,type,dept_name='')=>{
         this.modelType=type;
         this.param={
             add:{
                 url:'/api/dept/add',
                 params:{
-                    dept_id:dept_id
+                    id:id
                 },
                 info:{
                     error:'部门添加失败',
@@ -105,7 +105,7 @@ class DeptTree extends React.Component{
             edit:{
                 url:'/api/dept/edit',
                 params:{
-                    dept_id:dept_id
+                    id:id
                 },
                 info:{
                     error:'部门编辑失败',
@@ -116,7 +116,7 @@ class DeptTree extends React.Component{
             del:{
                 url:'/api/dept/del',
                 params:{
-                    dept_id:dept_id
+                    id:id
                 },
                 info:{
                     error:'部门删除失败',
@@ -190,17 +190,8 @@ class DeptTree extends React.Component{
 export default connect((state)=>{
     return {
         depts: (function(depts){
-            const formData=[
-                {
-                    dept_name:'测试',
-                    dept_id:6,
-                    dept_pid:-1,
-                    spread:true
-                },
-                ...depts
-            ]
-            return formData.map(dept=>{
-                return {...dept,key:dept.dept_id}
+            return depts.map(dept=>{
+                return {...dept,key:dept._id}
             })
         })(state.baseData.dept)
     }

@@ -4,12 +4,9 @@ import HeardImg from "./heartImg";
 class Person extends React.Component{
     render(){
         const {data,type}=this.props;
-        let key=type==='dept'?'dept_id':'member_id'
         return (
            <li>
-               {type!=='dept'? <input type="checkbox" checked={this.props.checked(data[key])} onChange={()=>{this.props.changeChecked(data)}}/>:
-                <input type="radio" checked={this.props.checkedDept(data[key])} onChange={()=>{this.props.changeDept(data)}}/>
-                }
+               <input type="checkbox" checked={this.props.checked(data.id)} onChange={()=>{this.props.changeChecked(data)}}/>
                {type!=='dept'?<HeardImg {...data} style={{width:'30px',height:'30px'}}/>:null}
                <span>{type!=='dept'?data.member_name:data.dept_name}</span>
            </li>
@@ -18,28 +15,25 @@ class Person extends React.Component{
 }
 class DataTree extends React.Component{
     verifyChecked=(id)=>{
-        let ids=this.props.selectedData.map(item=>{
-            return this.props.type!=='dept'?item.member_id:item.dept_id
-        })
-        return ids.some(item=>item===id);
+        var boolean=this.props.selectedData.some(item=>item.id===id);
+        return boolean;
     }
     checkedDept=(id)=>{
         return id===this.props.selectedData;
     }
     changeChecked=(data)=>{
-        let field=this.props.type!=='dept'?'member_id':'dept_id';
-        const id=data[field];
         const len=this.props.selectedData.length;
         let index=-1;
         for(let i=0;i<len;i++){
-            if(id===this.props.selectedData[i][field]){
+            if(data.id===this.props.selectedData[i].id){
                 index=i;
                 break;
             }
         }
         if(index>-1){
-            this.props.selectedData.splice(index,1);
-            this.props.changeSelectData(this.props.selectedData);
+            var newData=[...this.props.selectedData]
+            newData.splice(index,1);
+            this.props.changeSelectData(newData);
         }else{
             this.props.changeSelectData([...this.props.selectedData,data]);
         }
@@ -53,7 +47,7 @@ class DataTree extends React.Component{
                {this.props.type==='dept'?
                <ul>
                     {this.props.dept.map((item,index)=>{
-                       return <Person checkedDept={this.checkedDept} changeDept={this.changeDept} data={item} type={this.props.type} key={index} checked={this.verifyChecked} changeChecked={this.changeChecked}/>
+                       return <Person changeChecked={this.changeChecked} data={item} type={this.props.type} key={index} checked={this.verifyChecked}/>
                     })}
                </ul>
                 :null   
@@ -61,7 +55,7 @@ class DataTree extends React.Component{
              {this.props.type==='staff'?
                <ul>
                     {this.props.staff.map((item,index)=>{
-                       return <Person data={item} type={this.props.type} key={index} checked={this.verifyChecked} changeChecked={this.changeChecked}/>
+                       return <Person data={item} type={this.props.type} key={item.id} checked={this.verifyChecked} changeChecked={this.changeChecked}/>
                     })}
                </ul>
                 :null   

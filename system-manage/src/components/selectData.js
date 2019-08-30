@@ -1,5 +1,5 @@
 import React from "react";
-import {Modal} from "antd";
+import {Modal,message} from "antd";
 import Search from "./search";
 import DataTree from "./baseDataTree.js";
 import "./../css/tree.css";
@@ -25,8 +25,7 @@ class SelectData extends React.Component{
         })
     }
     delSelectData(data){
-        let field=this.props.type!=='dept'?'member_id':'dept_id';
-        const newData=this.state.selectedData.filter(item=>item[field]!==data[field]);
+        const newData=this.state.selectedData.filter(item=>item.id!==data.id);
         this.changeSelectData(newData);
     }
     changeSelectData=(selectedData)=>{
@@ -49,8 +48,16 @@ class SelectData extends React.Component{
                 })}
         </ul>
     }
+    onOk=()=>{
+      if(!this.props.maxNum || this.state.selectedData.length<=this.props.maxNum){
+        this.props.changeFormData(this.state.selectedData)
+        this.props.changeSelectPerson(false)
+      }else{
+        message.warning(`最多只能选择${this.props.maxNum}个`);
+      }
+    }
     render(){
-        return (<Modal visible={true} onCancel={()=>{this.props.changeSelectPerson(false)}} onOk={()=>{this.props.changeFormData(this.props.type!=='dept'?'members':'dept',this.state.selectedData);this.props.changeSelectPerson(false)}}>
+        return (<Modal visible={true} onCancel={()=>{this.props.changeSelectPerson(false)}} onOk={this.onOk}>
             <div className="select-wrap">
                 <div className="search_input">
                     <Search search={this.searchByKeyword} placeholder="请输入关键字"/>
@@ -62,12 +69,11 @@ class SelectData extends React.Component{
                     </div>
                     <div className="right-result">
                         {
-                            this.props.type!=='dept'?
                             this.state.selectedData.map((item)=>{
-                                return <span key={item.member_id || item.department_id} className="result" onClick={()=>{this.delSelectData(item)}}>
+                                return <span key={item.id} className="result" onClick={()=>{this.delSelectData(item)}}>
                                     {this.props.type!=='dept'?item.member_name:item.dept_name}
                                 </span>
-                            }):this.state.selectedData.dept_name
+                            })
                         }
                     </div>
                 </div>

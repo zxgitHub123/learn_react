@@ -34,11 +34,10 @@ class Detail extends React.Component{
         }
     }
     render(){
-        return <div>
+        return (<table className="g-form">
             {this.props.showBread?<div className="header">
                 <span className="link bread" onClick={()=>{this.props.changeStatus('list')}}>考勤分组</span> > <span className="bread">考勤分组详情</span>
             </div>:null}
-            <table className="g-form">
                 <tbody>
                     <tr>
                         <td className="in-h">
@@ -79,8 +78,7 @@ class Detail extends React.Component{
                         </td>
                     </tr>
                 </tbody>
-            </table>
-        </div>
+            </table>)
     }
 }
 export default connect((state)=>{

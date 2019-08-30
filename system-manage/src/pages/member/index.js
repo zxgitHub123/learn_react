@@ -17,11 +17,11 @@ class Member extends React.Component{
                 title:'姓名'
             },
             {
-                key:'department_name',
+                key:'dept_name',
                 title:'部门'
             },
             {
-                key:'member_id',
+                key:'work_num',
                 title:'工号'
             },
             {
@@ -29,7 +29,7 @@ class Member extends React.Component{
                 title:'操作',
                 render:(item)=>{
                     return <div>
-                        <span className="action" onClick={()=>{this.changeStatus('edit','edit_member',item)}}>编辑</span>
+                        <span className="action" onClick={()=>{this.changeStatus('edit','edit',item)}}>编辑</span>
                         <span className="action" onClick={()=>{this.showPop(item)}}>删除</span>
                     </div>
                 }
